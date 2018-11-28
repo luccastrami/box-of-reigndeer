@@ -55,7 +55,7 @@ if __name__=='__main__':
     screen = pygame.display.set_mode([Screen_Width, Screen_Height])
 
     # Make our player and asteroid objects
-    player = Player()
+    player = Player(message_pump)
     background = Background(Screen_Width, Screen_Height, message_pump)
     tent = Tent(message_pump)
     message_pump.send_message("change level","1")

@@ -6,7 +6,7 @@ class Tent(object):
     def __init__(self, message_pump):
         self.message_pump = message_pump
         self.message_pump.register(self)
-        
+        self.visible = False
         self.location = Location(10,150)
 #        self.reset() #Randomly pick a starting location
 
@@ -25,10 +25,20 @@ class Tent(object):
     def message(self, msg_type, msg):
         if msg_type == "change level":
             if msg == "1":
+                self.visible = True
                 print("loading first level")
-            elif msg == "2":
-                self.location.x += 100
-                print("loading second level")
+            else:
+                self.visible = False   
+        elif msg_type == "player location" and self.visible:
+            x = msg.split(" ")[0]
+            x = int(x)
+            y = msg.split(" ")[1]
+            y = int(y)
+            if x> 80 and x < 140:
+                if y > 180 and y < 290:
+                    print("Going to level 2")
+                    self.message_pump.send_message("change level","2")
+            print("{} : {} , [{}]".format(x, y, type(x)))
 
     def reset(self):
         # We have reached the bottom of the screen so reset
@@ -37,7 +47,8 @@ class Tent(object):
         pass
 
     def draw(self, screen):
-        screen.blit(self.sprite.image, self.location.get_loc())
+        if self.visible:
+            screen.blit(self.sprite.image, self.location.get_loc())
 
     def check_collision(self, obj):
         # Check if the two objects are touching

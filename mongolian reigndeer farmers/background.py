@@ -6,16 +6,21 @@ class Background(object):
     def __init__(self, width, height, message_pump):
         self.message_pump = message_pump
         self.message_pump.register(self)
-        
+        self.curlevel = 1
         self.location = Location(0,0)
         self.reset() #Randomly pick a starting location
 
 #        self.size = Location(40,40)
-        self.sprite = pygame.sprite.Sprite()
-        self.sprite.image = pygame.image.load("start location.jpg").convert()
-        self.sprite.image= pygame.transform.scale(self.sprite.image,(width, height))
-        self.sprite.rect = self.sprite.image.get_rect()
+        self.forestsprite = pygame.sprite.Sprite()
+        self.forestsprite.image = pygame.image.load("start location.jpg").convert()
+        self.forestsprite.image= pygame.transform.scale(self.forestsprite.image,(width, height))
+        self.forestsprite.rect = self.forestsprite.image.get_rect()
 
+        self.yurtsprite = pygame.sprite.Sprite()
+        self.yurtsprite.image = pygame.image.load("yurt inside.jpg").convert()
+        self.yurtsprite.image= pygame.transform.scale(self.yurtsprite.image,(width, height))
+        self.yurtsprite.rect = self.yurtsprite.image.get_rect()
+        
     def update(self):
         pass
 #        self.location.y += 10
@@ -26,8 +31,12 @@ class Background(object):
             if msg == "1":
                 print("loading first level")
             elif msg == "2":
-                self.location.x += 100
+                self.curlevel = 2
                 print("loading second level")
+            elif msg == "3":
+                self.location.x += 100
+                print("loading third level")
+            
     def reset(self):
         # We have reached the bottom of the screen so reset
 #        self.location.y = 0
@@ -35,8 +44,11 @@ class Background(object):
         pass
 
     def draw(self, screen):
-        screen.blit(self.sprite.image, self.location.get_loc())
-
+#        screen.blit(self.forestsprite.image, self.location.get_loc())
+        if self.curlevel == 1:
+            screen.blit(self.forestsprite.image, self.location.get_loc())
+        elif self.curlevel == 2:
+            screen.blit(self.yurtsprite.image, self.location.get_loc())
     def check_collision(self, obj):
         # Check if the two objects are touching
         diffx = self.location.x - obj.location.x
