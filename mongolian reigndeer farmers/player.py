@@ -3,6 +3,7 @@ from utils import Location
 
 class Player(object):
     def __init__(self, message_pump):
+        self.curlevel = 0
         self.message_pump = message_pump
         self.message_pump.register(self)
         
@@ -14,7 +15,13 @@ class Player(object):
         self.sprite.rect = self.sprite.image.get_rect()
     
     def message(self, msg_type, msg):
-        pass
+        if msg_type == "change level":
+            if msg == "1":
+                self.location.x = 50
+                self.location.y = 440
+                self.curlevel = 1
+            if msg == "2":
+                self.curlevel = 2
 
     def update(self):
         # To track whether we have actually moved or not
@@ -47,9 +54,20 @@ class Player(object):
         if self.location.y > 440:
             self.location.y = 440
 
-        if self.location.y < 280:
-            self.location.y = 280
-        
+        if self.location.y < 0:
+            self.location = 0
+            
+        #Level specific boundary checks
+        if self.curlevel == 1:
+            if self.location.y < 280:
+                self.location.y = 280
+        elif self.curlevel == 2:
+            if self.location.y < 300:
+                self.location.y = 300
+            if self.location.x < 66:
+                self.location.x = 66
+            if self.location.x > 500:
+                self.location.x = 500
         if self.location.x != old_x or self.location.y != old_y:
             # Only update everyone on our location if we have actually moved - otherwise this is a waste
             self.message_pump.send_message("player location","{} {}".format(self.location.x, self.location.y))
