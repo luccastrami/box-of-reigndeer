@@ -38,7 +38,7 @@ class Tent(object):
                 if y > 180 and y < 290:
                     print("Going to level 2")
                     self.message_pump.send_message("change level","2")
-            print("{} : {} , [{}]".format(x, y, type(x)))
+            # print("{} : {} , [{}]".format(x, y, type(x)))
 
     def reset(self):
         # We have reached the bottom of the screen so reset

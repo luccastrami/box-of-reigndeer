@@ -12,10 +12,15 @@ class Player(object):
         self.sprite = pygame.sprite.Sprite()
         self.sprite.image = pygame.image.load("player.png").convert()
         self.sprite.rect = self.sprite.image.get_rect()
+    
     def message(self, msg_type, msg):
         pass
 
     def update(self):
+        # To track whether we have actually moved or not
+        old_x = self.location.x
+        old_y = self.location.y
+
         if pygame.key.get_pressed()[pygame.K_LEFT] != 0:
             # We need to move to the LEFT
             self.location.x -= 3
@@ -44,8 +49,10 @@ class Player(object):
 
         if self.location.y < 280:
             self.location.y = 280
-            
-        self.message_pump.send_message("player location","{} {}".format(self.location.x, self.location.y))
+        
+        if self.location.x != old_x or self.location.y != old_y:
+            # Only update everyone on our location if we have actually moved - otherwise this is a waste
+            self.message_pump.send_message("player location","{} {}".format(self.location.x, self.location.y))
             
     def draw(self, screen):
         screen.blit(self.sprite.image, self.location.get_loc())
