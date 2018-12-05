@@ -59,4 +59,5 @@ if __name__=='__main__':
     background = Background(Screen_Width, Screen_Height, message_pump)
     tent = Tent(message_pump)
     message_pump.send_message("change level","1")
+    message_pump.send_message("start_game", "")
     run()
