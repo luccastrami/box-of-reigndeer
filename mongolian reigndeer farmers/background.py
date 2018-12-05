@@ -1,5 +1,6 @@
 import pygame
 from utils import Location
+from mrf_map import MRFMap
 import random
 
 class Background(object):
@@ -21,6 +22,13 @@ class Background(object):
         self.yurtsprite.image= pygame.transform.scale(self.yurtsprite.image,(width, height))
         self.yurtsprite.rect = self.yurtsprite.image.get_rect()
         
+        self.mapsprite = pygame.sprite.Sprite()
+        self.mapsprite.image = pygame.image.load("map.jpg").convert()
+        self.mapsprite.image= pygame.transform.scale(self.mapsprite.image,(100, 45))
+        self.mapsprite.rect = self.mapsprite.image.get_rect()
+        
+        self.map = MRFMap(width, height, message_pump)
+        
     def update(self):
         pass
 #        self.location.y += 10
@@ -29,13 +37,21 @@ class Background(object):
     def message(self, msg_type, msg):
         if msg_type == "change level":
             if msg == "1":
+                self.curlevel = 1
                 print("loading first level")
             elif msg == "2":
                 self.curlevel = 2
                 print("loading second level")
             elif msg == "3":
-                self.location.x += 100
-                print("loading third level")
+                self.curlevel = 3
+        elif msg_type == "player location" and self.curlevel == 2:
+            x = msg.split(" ")[0]
+            x = int(x)
+            y = msg.split(" ")[1]
+            y = int(y)
+            if y > 420:
+                print("Going to level 1")
+                self.message_pump.send_message("change level","1")
             
     def reset(self):
         # We have reached the bottom of the screen so reset
@@ -49,6 +65,10 @@ class Background(object):
             screen.blit(self.forestsprite.image, self.location.get_loc())
         elif self.curlevel == 2:
             screen.blit(self.yurtsprite.image, self.location.get_loc())
+            screen.blit(self.mapsprite.image, (410, 220))
+        elif self.curlevel == 3:
+            self.map.draw(screen)
+            
     def check_collision(self, obj):
         # Check if the two objects are touching
         diffx = self.location.x - obj.location.x
