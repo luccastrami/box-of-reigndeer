@@ -26,10 +26,9 @@ class Player(object):
         
         self.levels = []
         level0 = []
-        level1 = []
         self.levels.append(level0)
+        level1 = []
         self.levels.append(level1)
-
         level2 = []
         bed_rect = Rect(185, 170, 195, 100)
         cushion_rect = Rect(0,0,110,250)
@@ -91,8 +90,8 @@ class Player(object):
             self.location.y += 2
             
         # Make sure we can't leave the screen
-        if self.location.x > 560:
-            self.location.x = 560
+        if self.location.x > 386:
+            self.location.x = 386
             
         if self.location.x < 0:
             self.location.x = 0
@@ -105,8 +104,8 @@ class Player(object):
             
         #Level specific boundary checks
         if self.curlevel == 1:
-            if self.location.y < 280:
-                self.location.y = 280
+            if self.location.y < 230:
+                self.location.y = 230
         elif self.curlevel == 2:
             bHit = False
             for r in self.levels[2]:
