@@ -34,7 +34,7 @@ class Tent(object):
             x = int(x)
             y = msg.split(" ")[1]
             y = int(y)
-            if x> 80 and x < 140:
+            if x> 94 and x < 138:
                 if y > 180 and y < 290:
                     print("Going to level 2")
                     self.message_pump.send_message("change level","2")

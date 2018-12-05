@@ -10,7 +10,7 @@ class Background(object):
         self.curlevel = 1
         self.location = Location(0,0)
         self.reset() #Randomly pick a starting location
-
+        self.player_location = Location(0,0)
 #        self.size = Location(40,40)
         self.forestsprite = pygame.sprite.Sprite()
         self.forestsprite.image = pygame.image.load("start location.jpg").convert()
@@ -30,10 +30,17 @@ class Background(object):
         self.map = MRFMap(width, height, message_pump)
         
     def update(self):
-        pass
-#        self.location.y += 10
-#        if self.location.y > 500:
-#            self.reset()
+        if self.player_location.x >380 and self.player_location.x <470:
+            if self.player_location.y >=230 and self.player_location.y <250:
+    
+                if pygame.key.get_pressed()[pygame.K_e] != 0:
+                    print("press e")
+                    self.message_pump.send_message("change level","3")
+        
+#            self.facing = "e"
+#            # We need to move to the LEFT
+#            self.location.x -= 2
+
     def message(self, msg_type, msg):
         if msg_type == "change level":
             if msg == "1":
@@ -44,14 +51,19 @@ class Background(object):
                 print("loading second level")
             elif msg == "3":
                 self.curlevel = 3
+                print("loading third level")
         elif msg_type == "player location" and self.curlevel == 2:
             x = msg.split(" ")[0]
             x = int(x)
             y = msg.split(" ")[1]
             y = int(y)
+            self.player_location.x = x
+            self.player_location.y = y
             if y > 420:
                 print("Going to level 1")
                 self.message_pump.send_message("change level","1")
+           
+        
             print("{} : {} , [{}]".format(x, y, type(x)))
     def reset(self):
         # We have reached the bottom of the screen so reset

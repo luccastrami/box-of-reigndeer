@@ -8,6 +8,7 @@ from message_pump import MessagePump
 def update():
     # Here we update the game to move elements
     player.update()
+    background.update()
 
 def draw(screen):
     # Here we draw each component to the screen

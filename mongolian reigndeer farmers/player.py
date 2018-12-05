@@ -62,6 +62,10 @@ class Player(object):
                 self.location.x = 110
                 self.location.y = 350
                 self.curlevel = 2
+            if msg == "3":
+                self.location.x = 110
+                self.location.y = 350
+                self.curlevel = 3
         if msg_type == "start_game":
             self.location.x = 40
             self.location.y = 420
@@ -105,9 +109,9 @@ class Player(object):
             self.location.y += 2
             
         # Make sure we can't leave the screen
-        if self.location.x > 386:
-            self.location.x = 386
-            
+        if self.location.x > 500:
+            self.location.x = 500
+#            386
         if self.location.x < 0:
             self.location.x = 0
             
@@ -119,8 +123,10 @@ class Player(object):
             
         #Level specific boundary checks
         if self.curlevel == 1:
-            if self.location.y < 230:
-                self.location.y = 230
+            if self.location.y < 272:
+                self.location.y = 272
+            if self.location.x > 386:
+                self.location.x = 386
         elif self.curlevel == 2:
             bHit = False
             for r in self.levels[2]:
@@ -144,7 +150,7 @@ class Player(object):
             self.countdown = self.COOLDOWN
 
     def draw(self, screen):
-        if self.curlevel == 0 or self.curlevel == 1:    
+        if self.curlevel == 0 or self.curlevel == 1 or self.curlevel == 3:  
             act_offset = self.cur_offset/2
         
             if self.facing == "left":
