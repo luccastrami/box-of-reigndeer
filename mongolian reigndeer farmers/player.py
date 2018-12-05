@@ -57,20 +57,20 @@ class Player(object):
         if pygame.key.get_pressed()[pygame.K_LEFT] != 0:
             self.facing = "left"
             # We need to move to the LEFT
-            self.location.x -= 3
+            self.location.x -= 2
 
         if pygame.key.get_pressed()[pygame.K_RIGHT] != 0:
             self.facing = "right"
             # We need to move to the RIGHT
-            self.location.x += 3
+            self.location.x += 2
 
         if pygame.key.get_pressed()[pygame.K_UP] != 0:
             # We need to move UP
-            self.location.y -= 3
+            self.location.y -= 2
             
         if pygame.key.get_pressed()[pygame.K_DOWN] != 0:
             # We need to move to the DOWN
-            self.location.y += 3
+            self.location.y += 2
             
         # Make sure we can't leave the screen
         if self.location.x > 560:
@@ -90,8 +90,10 @@ class Player(object):
             if self.location.y < 280:
                 self.location.y = 280
         elif self.curlevel == 2:
-            if self.location.y < 300:
-                self.location.y = 300
+            if self.location.x >150 and self.location.x <250 and self.location.y <400:
+                self.location.y = 400
+            if self.location.y < 200:
+                self.location.y = 200
             if self.location.x < 66:
                 self.location.x = 66
             if self.location.x > 500:

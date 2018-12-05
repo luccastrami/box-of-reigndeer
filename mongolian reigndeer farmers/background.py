@@ -52,7 +52,7 @@ class Background(object):
             if y > 420:
                 print("Going to level 1")
                 self.message_pump.send_message("change level","1")
-            
+            print("{} : {} , [{}]".format(x, y, type(x)))
     def reset(self):
         # We have reached the bottom of the screen so reset
 #        self.location.y = 0
