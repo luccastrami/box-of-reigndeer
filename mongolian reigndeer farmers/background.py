@@ -1,5 +1,5 @@
 import pygame
-from utils import Location
+from utils.location import Location
 from mrf_map import MRFMap
 import random
 

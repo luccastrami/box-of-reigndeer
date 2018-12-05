@@ -1,5 +1,6 @@
 import pygame
-from utils import Location
+from utils.location import Location
+from utils.rect import Rect
 
 class Player(object):
     def __init__(self, message_pump):
@@ -22,6 +23,23 @@ class Player(object):
         self.sprites.append( pygame.sprite.Sprite() )
         self.sprites[1].image = pygame.image.load("lewis_character_5_left.png").convert_alpha()
         self.sprites[1].rect = self.sprites[1].image.get_rect()
+        
+        self.levels = []
+        level0 = []
+        level1 = []
+        self.levels.append(level0)
+        self.levels.append(level1)
+
+        level2 = []
+        bed_rect = Rect(185, 170, 195, 100)
+        cushion_rect = Rect(0,0,110,250)
+        cushion_rect_2 = Rect(0,0,90, 280)
+        stove_rect = Rect(0,0,66,340)
+        level2.append(bed_rect)
+        level2.append(cushion_rect)
+        level2.append(cushion_rect_2)
+        level2.append(stove_rect)
+        self.levels.append(level2)
         
         self.facing = "right"
        
@@ -90,14 +108,19 @@ class Player(object):
             if self.location.y < 280:
                 self.location.y = 280
         elif self.curlevel == 2:
-            if self.location.x >150 and self.location.x <250 and self.location.y <400:
-                self.location.y = 400
-            if self.location.y < 200:
-                self.location.y = 200
-            if self.location.x < 66:
-                self.location.x = 66
+            bHit = False
+            for r in self.levels[2]:
+                if r.hit_test(self.location.x, self.location.y):
+                    self.location.x = old_x
+                    self.location.y = old_y
+                    bHit = True
+
+            # Now check the boundaries
+            if self.location.y < 230:
+                self.location.y = 230
             if self.location.x > 500:
                 self.location.x = 500
+
         if self.location.x != old_x or self.location.y != old_y:
             self.update_walking_sprite()
             # Only update everyone on our location if we have actually moved - otherwise this is a waste

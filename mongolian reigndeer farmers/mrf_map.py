@@ -1,5 +1,5 @@
 import pygame
-from utils import Location
+from utils.location import Location
 import random
 
 class MRFMap(object):
