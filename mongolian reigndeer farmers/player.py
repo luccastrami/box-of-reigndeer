@@ -24,6 +24,16 @@ class Player(object):
         self.sprites[1].image = pygame.image.load("lewis_character_5_left.png").convert_alpha()
         self.sprites[1].rect = self.sprites[1].image.get_rect()
         
+        self.sprites.append( pygame.sprite.Sprite() )
+        self.sprites[2].image = pygame.image.load("lewis_character_5.png").convert_alpha()
+        self.sprites[2].image = pygame.transform.scale(self.sprites[0].image,(125, 50))
+        self.sprites[2].rect = self.sprites[2].image.get_rect()
+
+        self.sprites.append( pygame.sprite.Sprite() )
+        self.sprites[3].image = pygame.image.load("lewis_character_5.png").convert_alpha()
+        self.sprites[3].image = pygame.transform.scale(self.sprites[1].image,(125, 50))
+        self.sprites[3].rect = self.sprites[3].image.get_rect()
+        
         self.levels = []
         level0 = []
         self.levels.append(level0)
@@ -45,12 +55,17 @@ class Player(object):
     def message(self, msg_type, msg):
         if msg_type == "change level":
             if msg == "1":
-                self.location.x = 50
-                self.location.y = 440
+                self.location.x = 110
+                self.location.y = 320
                 self.curlevel = 1
             if msg == "2":
+                self.location.x = 110
+                self.location.y = 350
                 self.curlevel = 2
-
+        if msg_type == "start_game":
+            self.location.x = 40
+            self.location.y = 420
+            
     def update_walking_sprite(self):
         self.countdown -= 1
         if self.countdown < 1:
@@ -129,11 +144,19 @@ class Player(object):
             self.countdown = self.COOLDOWN
 
     def draw(self, screen):
-        if self.facing == "left":
-            screen.blit(self.sprites[1].image, self.location.get_loc(), (self.cur_offset,0,50,100))    
+        if self.curlevel == 0 or self.curlevel == 1:    
+            act_offset = self.cur_offset/2
+        
+            if self.facing == "left":
+                screen.blit(self.sprites[3].image, self.location.get_loc(), (act_offset,0,25,50))    
+            else:
+                screen.blit(self.sprites[2].image, self.location.get_loc(), (act_offset,0,25,50))
         else:
-            screen.blit(self.sprites[0].image, self.location.get_loc(), (self.cur_offset,0,50,100))
-       
+            if self.facing == "left":
+                screen.blit(self.sprites[1].image, self.location.get_loc(), (self.cur_offset,0,50,100))    
+            else:
+                screen.blit(self.sprites[0].image, self.location.get_loc(), (self.cur_offset,0,50,100))
+            
     def reset(self):
         self.destroy()
 
