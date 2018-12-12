@@ -15,7 +15,36 @@ class MRFMap(object):
         self.location = Location(0,0)
         
     def update(self):
-        pass
+#        if self.player_location.x = 112
+#            if self.player_location.y = 148
+#                
+#                if pygame.key.get_pressed()[pygame.K_e] != 0:
+#                    print("press e")
+#        elif self.player_location.x = 178
+#            if self.player_location.y = 204
+#            
+#                if pygame.key.get_pressed()[pygame.K_e] != 0:
+#                    print("press e")
+#        elif self.player_location.x = 256
+#            if self.player_location.y = 228
+#            
+#                if pygame.key.get_pressed()[pygame.K_e] != 0:
+#                    print("press e")
+#        elif self.player_location.x = 314
+#            if self.player_location.y = 270
+#            
+#                if pygame.key.get_pressed()[pygame.K_e] != 0:
+#                    print("press e")
+#        elif self.player_location.x = 380
+#            if self.player_location.y = 240
+#                
+#                if pygame.key.get_pressed()[pygame.K_e] != 0:
+#                    print("press e")
+#        elif self.player_location.x = 438
+#            if self.player_location.y = 214
+#        
+#                if pygame.key.get_pressed()[pygame.K_e] != 0:
+#                    print("press e")
 
     def message(self, msg_type, msg):
         
@@ -45,10 +74,25 @@ class MRFMap(object):
             y = msg.split(" ")[1]
             y = int(y)
             
-#            if x> 94 and x < 138:
-#                if y > 180 and y < 290:
-#                    self.message_pump.send_message("change level","4")#
-#            
+#            if x = 112
+#                if y = 148
+#                    self.message_pump.send_message("change level","4")
+#            if x = 178
+#                if y = 204
+#                    self.message_pump.send_message("change level","4")
+#            if x =  256
+#                if y = 228
+#                    self.message_pump.send_message("change level","4")
+#            if x = 314
+#                if y = 270
+#                    self.message_pump.send_message("change level","4")
+#            if x = 380
+#                if y = 240
+#                    self.message_pump.send_message("change level","4")
+#            if x = 438
+#                if y = 214
+#                    self.message_pump.send_message("change level","4")
+            
             print("{} : {} , [{}]".format(x, y, type(x)))
 
             
