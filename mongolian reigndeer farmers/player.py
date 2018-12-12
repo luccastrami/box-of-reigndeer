@@ -54,18 +54,23 @@ class Player(object):
        
     def message(self, msg_type, msg):
         if msg_type == "change level":
+            self.curlevel = int(msg)
             if msg == "1":
                 self.location.x = 110
                 self.location.y = 320
-                self.curlevel = 1
+#                self.curlevel = 1
             if msg == "2":
                 self.location.x = 110
                 self.location.y = 350
-                self.curlevel = 2
+#                self.curlevel = 2
             if msg == "3":
                 self.location.x = 110
                 self.location.y = 350
-                self.curlevel = 3
+#                self.curlevel = 3
+            if msg == "4":
+                self.location.x = 110
+                self.location.y = 350
+                print("Player is loading level 4")
         if msg_type == "start_game":
             self.location.x = 40
             self.location.y = 420
@@ -145,12 +150,17 @@ class Player(object):
             self.update_walking_sprite()
             # Only update everyone on our location if we have actually moved - otherwise this is a waste
             self.message_pump.send_message("player location","{} {}".format(self.location.x, self.location.y))
+
+#            print("{} : {} , [{}] player.py".format(x, y, type(x)))
         else:
             self.cur_offset = 100
             self.countdown = self.COOLDOWN
 
     def draw(self, screen):
-        if self.curlevel == 0 or self.curlevel == 1 or self.curlevel == 3:  
+#        small_levels = [0, 1, 3, 4, 5, 6, ]
+        
+#        if self.curlevel in small_levels: 
+        if self.curlevel != 2:
             act_offset = self.cur_offset/2
         
             if self.facing == "left":

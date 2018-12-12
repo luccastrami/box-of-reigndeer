@@ -8,99 +8,71 @@ class MRFMap(object):
         self.message_pump = message_pump
         self.message_pump.register(self)
         self.curlevel = 1
+        self.player_location = Location(0, 0)
         
+        self.changed_level = False
+
         self.mapsprite = pygame.sprite.Sprite()
         self.mapsprite.image = pygame.image.load("map.jpg").convert()
         self.mapsprite.image= pygame.transform.scale(self.mapsprite.image,(width, height))
         self.mapsprite.rect = self.mapsprite.image.get_rect()
         self.location = Location(0,0)
         self.tokens = []
-        self.tokens.append(HighlightToken(110,170))
-        self.tokens.append(HighlightToken(178,230))
+        self.tokens.append(HighlightToken(112,183, "1"))
+        self.tokens.append(HighlightToken(180,243, "4"))
+        self.tokens.append(HighlightToken(256,267, "5"))
+        self.tokens.append(HighlightToken(316,310, "6"))
+        self.tokens.append(HighlightToken(378,275, "7"))
+        self.tokens.append(HighlightToken(436,250, "8"))
         
     def update(self):
-#        if self.player_location.x = 112
-#            if self.player_location.y = 148
-#                
-#                if pygame.key.get_pressed()[pygame.K_e] != 0:
-#                    print("press e")
-#        elif self.player_location.x = 178
-#            if self.player_location.y = 204
-#            
-#                if pygame.key.get_pressed()[pygame.K_e] != 0:
-#                    print("press e")
-#        elif self.player_location.x = 256
-#            if self.player_location.y = 228
-#            
-#                if pygame.key.get_pressed()[pygame.K_e] != 0:
-#                    print("press e")
-#        elif self.player_location.x = 314
-#            if self.player_location.y = 270
-#            
-#                if pygame.key.get_pressed()[pygame.K_e] != 0:
-#                    print("press e")
-#        elif self.player_location.x = 380
-#            if self.player_location.y = 240
-#                
-#                if pygame.key.get_pressed()[pygame.K_e] != 0:
-#                    print("press e")
-#        elif self.player_location.x = 438
-#            if self.player_location.y = 214
-#        
-#                if pygame.key.get_pressed()[pygame.K_e] != 0:
-#                    print("press e")
+            if pygame.key.get_pressed()[pygame.K_e] != 0:
+                if self.changed_level is not False:
+                    print("duplicate e pressed on map")
+                    return 
+                for t in self.tokens:
+                    if t.hit_check(self.player_location.x, self.player_location.y) is True:
+                        print("MRF_map is changing level to {} player {},{}".format(t.level_name, self.player_location.x, self.player_location.y))
+                        self.message_pump.send_message("change level", t.level_name)
+            else:
+                 self.changed_level = False
 
+    def reset(self):
+        for t in self.tokens:
+            t.highlighted=False
+        self.changed_level = False
+                    
     def message(self, msg_type, msg):
-        
         if msg_type == "change level":
-            if msg == "1":
-                self.curlevel = 1
-                print("loading first level")
-            elif msg == "2":
-                self.curlevel = 2
-                print("loading yurt")
-            elif msg == "3":
+            print("Got a message {} {}".format(msg, self.changed_level))
+            
+        if msg_type == "change level" and self.changed_level is False:
+            if self.curlevel == 3:
+                print("reset")
+                self.reset()
+                
+            if msg == "3":
+                self.changed_level = True
                 self.curlevel = 3
-                print("loading map") 
-            elif msg == "4":
-                self.curlevel = 4
-                print("loading second level")
-            elif msg == "5":
-                self.curlevel = 5
-                print("loading third level")
-            elif msg == "6":
-                self.curlevel = 6
-                print("loading forth level")
+                self.player_location.x = 0
+                self.player_location.y = 0
+#                print("loading map on map.py")
+            else:
+                self.curlevel = 1
+
                        
         elif msg_type == "player location" and self.curlevel == 3:
+           
             x = msg.split(" ")[0]
             x = int(x)
             y = msg.split(" ")[1]
             y = int(y)
-            
-#            if x = 112
-#                if y = 148
-#                    self.message_pump.send_message("change level","4")
-#            if x = 178
-#                if y = 204
-#                    self.message_pump.send_message("change level","4")
-#            if x =  256
-#                if y = 228
-#                    self.message_pump.send_message("change level","4")
-#            if x = 314
-#                if y = 270
-#                    self.message_pump.send_message("change level","4")
-#            if x = 380
-#                if y = 240
-#                    self.message_pump.send_message("change level","4")
-#            if x = 438
-#                if y = 214
-#                    self.message_pump.send_message("change level","4")
-            
+            self.player_location.x = x
+            self.player_location.y = y
             for t in self.tokens:
                 t.hit_check(x, y)
 
-            print("{} : {} , [{}]".format(x, y, type(x)))
+#            print("{} : {} , [{}] mrf_map.py".format(x, y, type(x)))
 
             
     def draw(self, screen):

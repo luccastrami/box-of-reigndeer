@@ -9,7 +9,7 @@ class Tent(object):
         self.visible = False
         self.location = Location(10,150)
 #        self.reset() #Randomly pick a starting location
-
+        self.return_level = "1"
 #        self.size = Location(40,40)
         self.sprite = pygame.sprite.Sprite()
         self.sprite.image = pygame.image.load("yurt.png").convert_alpha()
@@ -24,11 +24,35 @@ class Tent(object):
 #            self.reset()
     def message(self, msg_type, msg):
         if msg_type == "change level":
+            if msg != "2":
+                self.return_level = msg
+                self.curlevel = int(msg)
+                
             if msg == "1":
+                self.location.x = 10
+                self.location.y = 150
+            elif msg == "4":
+                self.location.x = 250
+                self.location.y = 150
+            elif msg == "5":
+                self.location.x = 250
+                self.location.y = 130
+            elif msg == "6":
+                self.location.x = 250
+                self.location.y = 130
+            elif msg == "7":
+                self.location.x = 250
+                self.location.y = 130
+            elif msg == "8":
+                self.location.x = 250
+                self.location.y = 130
+                
+            tent_visible_levels = ["1", "4", "5", "6", "7", "8"]
+            if msg in tent_visible_levels:
                 self.visible = True
-                print("loading first level")
             else:
-                self.visible = False   
+                self.visible = False
+                
         elif msg_type == "player location" and self.visible:
             x = msg.split(" ")[0]
             x = int(x)
@@ -38,7 +62,7 @@ class Tent(object):
                 if y > 180 and y < 290:
                     print("Going to level 2")
                     self.message_pump.send_message("change level","2")
-            print("{} : {} , [{}]".format(x, y, type(x)))
+            print("{} : {} , [{}]tent.py".format(x, y, type(x)))
 
     def reset(self):
         # We have reached the bottom of the screen so reset

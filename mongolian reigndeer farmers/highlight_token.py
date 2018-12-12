@@ -2,14 +2,15 @@ from utils.location import Location
 import pygame
 
 class HighlightToken(object):
-    def __init__(self, _x, _y):
+    def __init__(self, _x, _y, level):
         self.highlighted = False
+        self.level_name = level
         self.location = Location(_x, _y)
         self.size = Location(80,80)
 
         self.tokensprite = pygame.sprite.Sprite()
         self.tokensprite.image = pygame.image.load("highlight_token.png").convert_alpha()
-        # self.tokensprite.image= pygame.transform.scale(self.tokensprite.image,(width, height))
+        self.tokensprite.image= pygame.transform.scale(self.tokensprite.image,( 20, 20))
         self.tokensprite.rect = self.tokensprite.image.get_rect()
 
     def draw(self, screen):
