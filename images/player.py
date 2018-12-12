@@ -1,5 +1,5 @@
 import pygame
-from utils import Location
+from utils.location import Location
 
 class Player(object):
     def __init__(self):

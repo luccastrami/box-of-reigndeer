@@ -1,6 +1,7 @@
 import pygame
 from utils.location import Location
 import random
+from highlight_token import HighlightToken
 
 class MRFMap(object):
     def __init__(self, width, height, message_pump):
@@ -13,6 +14,9 @@ class MRFMap(object):
         self.mapsprite.image= pygame.transform.scale(self.mapsprite.image,(width, height))
         self.mapsprite.rect = self.mapsprite.image.get_rect()
         self.location = Location(0,0)
+        self.tokens = []
+        self.tokens.append(HighlightToken(110,170))
+        self.tokens.append(HighlightToken(178,230))
         
     def update(self):
 #        if self.player_location.x = 112
@@ -93,6 +97,9 @@ class MRFMap(object):
 #                if y = 214
 #                    self.message_pump.send_message("change level","4")
             
+            for t in self.tokens:
+                t.hit_check(x, y)
+
             print("{} : {} , [{}]".format(x, y, type(x)))
 
             
@@ -101,3 +108,6 @@ class MRFMap(object):
 #            print("ERROR: Should not be able to call this when not on level 3")
         #draw map stuff - ie. all the map bits
         screen.blit(self.mapsprite.image, self.location.get_loc())
+
+        for t in self.tokens:
+            t.draw(screen)
