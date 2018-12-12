@@ -45,15 +45,15 @@ class MRFMap(object):
             y = msg.split(" ")[1]
             y = int(y)
             
-            if x> 94 and x < 138:
-                if y > 180 and y < 290:
-                    self.message_pump.send_message("change level","4")#
-            
+#            if x> 94 and x < 138:
+#                if y > 180 and y < 290:
+#                    self.message_pump.send_message("change level","4")#
+#            
             print("{} : {} , [{}]".format(x, y, type(x)))
 
             
     def draw(self, screen):
-        if self.curlevel != 3:
-            print("ERROR: Should not be able to call this when not on level 3")
+#        if self.curlevel != 3:
+#            print("ERROR: Should not be able to call this when not on level 3")
         #draw map stuff - ie. all the map bits
         screen.blit(self.mapsprite.image, self.location.get_loc())
