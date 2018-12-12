@@ -61,4 +61,7 @@ if __name__=='__main__':
     tent = Tent(message_pump)
     message_pump.send_message("change level","1")
     message_pump.send_message("start_game", "")
+
+    # Uncomment and use to jump to a level/screen
+    # message_pump.send_message("change level","3")
     run()
